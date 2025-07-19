@@ -233,10 +233,10 @@ app.get('/prescriptions/:patientId', async (req, res) => {
     console.error('Error fetching prescriptions:', err);
     res.status(500).send('Server error');
   }
-  app.get("/", (req, res) => {
-    res.send("Backend is running!");
-  });
   
 });
-
+// ✅ Add root route to confirm server is running
+app.get("/", (req, res) => {
+  res.send("Backend is running!");
+});
 
