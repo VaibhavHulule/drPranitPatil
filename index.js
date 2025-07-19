@@ -4,19 +4,29 @@ const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
+
 
 app.use(cors());
 app.use(bodyParser.json());
+const pool = new Pool({
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
+  ssl: { rejectUnauthorized: false } // Required for Railway PostgreSQL
+});
+
 
 // PostgreSQL connection pool
-const pool = new Pool({
+/*const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
   database: 'login_db', // Make sure this database exists
   password: 'Vaibhav@120147',
   port: 5433
-});
+});*/
 
 // ✅ Add Patient
 app.post('/patients', async (req, res) => {
@@ -223,6 +233,10 @@ app.get('/prescriptions/:patientId', async (req, res) => {
     console.error('Error fetching prescriptions:', err);
     res.status(500).send('Server error');
   }
+  app.get("/", (req, res) => {
+    res.send("Backend is running!");
+  });
+  
 });
 
 
