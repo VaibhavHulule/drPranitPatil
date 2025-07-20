@@ -1,17 +1,13 @@
-
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const { Pool } = require('pg');
-
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// ✅ Correct PostgreSQL pool setup for Railway
+// PostgreSQL connection (Railway-compatible)
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
@@ -21,7 +17,7 @@ const pool = new Pool({
 
 app.use(cors());
 app.use(express.json());
-
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 
